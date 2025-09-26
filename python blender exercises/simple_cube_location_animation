@@ -1,0 +1,49 @@
+# give python access to blenders functionality
+import bpy
+
+#add cube
+bpy.ops.mesh.primitive_cube_add()
+
+#get a reference active object
+cube = bpy.data.objects['Cube']
+
+#insert keyframe one
+start_frame = 1
+cube.keyframe_insert("location", frame = start_frame)
+
+#testing moving on x axis
+cube.location.z = 2.5
+cube.location.x = 2.5
+qurt1_frame = 45
+cube.keyframe_insert("location", frame = qurt1_frame)
+
+
+
+#change location of cube
+cube.location.z = 5
+cube.location.x = -2.5
+
+#insert keyframe last
+mid_frame = 90
+cube.keyframe_insert("location", frame = mid_frame)
+
+#having fun moving it on x axis
+cube.location.x = 2.5
+qurt2_frame = 135
+cube.keyframe_insert("location", frame = qurt2_frame)
+
+
+#change location of cube by x, y, z
+cube.location = (-5, -5, -5)
+
+
+#insert keyframe last
+last_frame = 180
+cube.keyframe_insert("location", frame = last_frame)
+
+#Learning take aways:
+#By performing an action in the scene panel, I can see the code operation in the bottom left panel to use in my script
+#I can run operations in the middle left consol box to see them happen in real time
+#I can rename an object in the consol with object.name = x I can also asign them to variables like cube = bpy.data.object['cube']
+#I can also take the object and insert a keyframe with cube.keyframe_insert("location",frame = x)
+#Also inside the console I can press tab while coding for it to populate a list of options for completion
