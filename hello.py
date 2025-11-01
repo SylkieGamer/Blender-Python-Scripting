@@ -16,3 +16,11 @@ git status
 git commit -m "I'm learning O_O"
 git status
 git push origin main
+
+Why did it take so long to figure out...
+git pull
+
+https://dzone.com/articles/top-20-git-commands-with-examples#:~:text=Usage:%20git%20checkout%20%2Db%20%5B,the%20most%20recently%20stashed%20changeset.
+git reset
+git log
+git log -follow fIlEnAmE
