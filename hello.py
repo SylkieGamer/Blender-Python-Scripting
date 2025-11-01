@@ -1,0 +1,1 @@
+print("Hello Git! This is my first commit from the terminal!")
