@@ -1,0 +1,8 @@
+{
+    "python.analysis.extraPaths": [
+       "/home/syls-sexy-toaster/Desktop/Blender/4.5.3 Python Scripting/fake_bpy_modules_4.2-20241010"
+    ],
+    "python.autoComplete.extraPaths": [
+        "/home/syls-sexy-toaster/Desktop/Blender/4.5.3 Python Scripting/fake_bpy_modules_4.2-20241010"
+    ]
+}
