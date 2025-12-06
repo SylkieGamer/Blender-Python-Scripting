@@ -13,6 +13,15 @@
 #the class structure for it and to add @staticmethod and @classmethod.
 
 ###Code
+bl_info = {
+    "name": "Bug Tooling",
+    "author": "Your Name",
+    "version": (0, 1, 0),
+    "blender": (4, 5, 0),
+    "location": "View3D > Sidebar > My Addon Panel",
+    "description": "A simple custom addon for Blender."
+}
+
 import bpy
 from bpy.types import Operator, Panel
 import random, math

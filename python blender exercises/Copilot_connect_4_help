@@ -1,0 +1,113 @@
+import random
+
+possibleLetters = ["A","B","C","D","E","F","G"]
+rows = 6
+cols = 7
+gameBoard = [["" for _ in range(cols)] for _ in range(rows)]
+
+def printGameBoard():
+    print("\n    A     B     C     D     E     F     G", end="")
+    for r in range(rows):
+        print("\n    +----+----+----+----+----+----+----+")
+        print(f"{r}  |", end="")
+        for c in range(cols):
+            cell = gameBoard[r][c]
+            if cell == "o" or cell == "x":
+                print(f"  {cell} |", end="")
+            else:
+                print("    |", end="")
+    print("\n    +----+----+----+----+----+----+----+")
+
+def modifyArray(row, col, turn):
+    gameBoard[row][col] = turn
+
+def checkForWinner(chip):
+    # horizontal (row fixed, col sliding)
+    for r in range(rows):
+        for c in range(cols - 3):
+            if gameBoard[r][c] == chip and gameBoard[r][c+1] == chip and gameBoard[r][c+2] == chip and gameBoard[r][c+3] == chip:
+                print(f"\nGame Over! {chip} wins! Thank you for playing :)")
+                return True
+    # vertical (col fixed, row sliding)
+    for c in range(cols):
+        for r in range(rows - 3):
+            if gameBoard[r][c] == chip and gameBoard[r+1][c] == chip and gameBoard[r+2][c] == chip and gameBoard[r+3][c] == chip:
+                print(f"\nGame Over! {chip} wins! Thank you for playing :)")
+                return True
+    # diagonal top-left to bottom-right
+    for r in range(rows - 3):
+        for c in range(cols - 3):
+            if gameBoard[r][c] == chip and gameBoard[r+1][c+1] == chip and gameBoard[r+2][c+2] == chip and gameBoard[r+3][c+3] == chip:
+                print(f"\nGame Over! {chip} wins! Thank you for playing :)")
+                return True
+    # diagonal bottom-left to top-right
+    for r in range(3, rows):
+        for c in range(cols - 3):
+            if gameBoard[r][c] == chip and gameBoard[r-1][c+1] == chip and gameBoard[r-2][c+2] == chip and gameBoard[r-3][c+3] == chip:
+                print(f"\nGame Over! {chip} wins! Thank you for playing :)")
+                return True
+    return False
+
+def letter_to_col(letter):
+    letter = letter.upper()
+    if letter in possibleLetters:
+        return possibleLetters.index(letter)
+    return None
+
+def parse_player_input(s):
+    s = s.strip().upper()
+    if len(s) < 2:
+        return None
+    col = letter_to_col(s[0])
+    try:
+        row = int(s[1])
+    except ValueError:
+        return None
+    if col is None or not (0 <= row < rows):
+        return None
+    return (row, col)
+
+def is_space_available(row, col):
+    return gameBoard[row][col] == ""
+
+def drop_row_for_column(col):
+    # return lowest available row index in column or None if full
+    for r in range(rows-1, -1, -1):
+        if gameBoard[r][col] == "":
+            return r
+    return None
+
+turnCounter = 0
+while True:
+    printGameBoard()
+    if turnCounter % 2 == 0:
+        # human
+        while True:
+            spacePicked = input("\nChoose a space (e.g. A5 where 5 is row 0..5): ")
+            parsed = parse_player_input(spacePicked)
+            if not parsed:
+                print("Invalid input format.")
+                continue
+            row, col = parsed
+            # apply gravity: find lowest available row in that column
+            drop_row = drop_row_for_column(col)
+            if drop_row is None:
+                print("Column is full.")
+                continue
+            modifyArray(drop_row, col, 'o')
+            break
+        winner = checkForWinner('o')
+        turnCounter += 1
+    else:
+        # CPU turn
+        while True:
+            col = random.choice(range(cols))
+            drop_row = drop_row_for_column(col)
+            if drop_row is not None:
+                modifyArray(drop_row, col, 'x')
+                break
+        turnCounter += 1
+        winner = checkForWinner('x')
+    if winner:
+        printGameBoard()
+        break
